@@ -136,8 +136,6 @@ install_files() {
     print_success "已复制: kernel/tegra234-rm01+p3701-0005-nv.dts"
     print_success "已复制: kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
 }
-    print_success "已复制: kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
-}
 
 # 验证安装
 verify_installation() {
