@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # RM01 设备 Jetson Orin 刷机文件安装脚本
-# 版本: 1.0
+# 版本: 1.1
 # 日期: 2025年6月12日
 
 set -e  # 遇到错误时退出
+
+# 获取脚本所在目录的绝对路径
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 颜色定义
 RED='\033[0;31m'
@@ -67,20 +70,22 @@ check_required_files() {
     print_status "检查必需文件..."
     
     local files=(
-        "rm01-orin.conf"
-        "bootloader/tegra234-mb2-bct-common.dtsi"
-        "kernel/tegra234-rm01+p3701-0005-nv.dts"
-        "kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
+        "$SCRIPT_DIR/rm01-orin.conf"
+        "$SCRIPT_DIR/bootloader/tegra234-mb2-bct-common.dtsi"
+        "$SCRIPT_DIR/kernel/tegra234-rm01+p3701-0005-nv.dts"
+        "$SCRIPT_DIR/kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
     )
     
     for file in "${files[@]}"; do
         if [ ! -f "$file" ]; then
             print_error "必需文件缺失: $file"
+            print_error "请确保脚本位于 RM01Flashing 项目目录中"
             exit 1
         fi
     done
     
     print_success "所有必需文件检查通过"
+    print_status "项目目录: $SCRIPT_DIR"
 }
 
 # 创建备份
@@ -115,20 +120,22 @@ install_files() {
     
     # 复制配置文件
     print_status "复制配置文件..."
-    cp rm01-orin.conf "$L4T_DIR/"
+    cp "$SCRIPT_DIR/rm01-orin.conf" "$L4T_DIR/"
     print_success "已复制: rm01-orin.conf"
     
     # 复制 bootloader 文件
     print_status "复制 bootloader 文件..."
-    cp bootloader/tegra234-mb2-bct-common.dtsi "$L4T_DIR/bootloader/"
+    cp "$SCRIPT_DIR/bootloader/tegra234-mb2-bct-common.dtsi" "$L4T_DIR/bootloader/"
     print_success "已复制: bootloader/tegra234-mb2-bct-common.dtsi"
     
     # 复制设备树文件
     print_status "复制设备树文件..."
     mkdir -p "$L4T_DIR/kernel/dtb"
-    cp kernel/tegra234-rm01+p3701-0005-nv.dts "$L4T_DIR/kernel/"
-    cp kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb "$L4T_DIR/kernel/dtb/"
+    cp "$SCRIPT_DIR/kernel/tegra234-rm01+p3701-0005-nv.dts" "$L4T_DIR/kernel/"
+    cp "$SCRIPT_DIR/kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb" "$L4T_DIR/kernel/dtb/"
     print_success "已复制: kernel/tegra234-rm01+p3701-0005-nv.dts"
+    print_success "已复制: kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
+}
     print_success "已复制: kernel/dtb/tegra234-rm01+p3701-0005-nv-withoutCamera.dtb"
 }
 

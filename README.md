@@ -2,6 +2,8 @@
 
 这个仓库包含为 RM01 载板配置的 Jetson Orin 设备树文件和刷机配置文件。
 
+**GitHub 仓库**: https://github.com/thomas-hiddenpeak/RM01Flashing
+
 ## 项目结构
 
 ```
@@ -63,14 +65,16 @@ RM01Flashing/
 如果您已经有了JetPack 6.2环境，可以直接按以下步骤操作：
 
 ```bash
-# 1. 进入项目目录
-cd RM01Flashing
+# 1. 克隆项目仓库
+git clone https://github.com/thomas-hiddenpeak/RM01Flashing.git
 
 # 2. 给脚本执行权限
-chmod +x install.sh
+chmod +x RM01Flashing/install.sh
 
-# 3. 运行安装脚本（脚本会自动使用默认L4T路径）
-./install.sh
+# 3. 运行安装脚本（可在任意目录下运行）
+./RM01Flashing/install.sh
+# 或者
+cd RM01Flashing && ./install.sh
 
 # 4. 按照脚本提示进行刷机
 ```
@@ -79,22 +83,34 @@ chmod +x install.sh
 
 ### 方法一：使用自动安装脚本（推荐）
 
-1. **传输文件到Ubuntu 22.04系统**：
-   将整个RM01Flashing文件夹传输到Ubuntu系统
-
-2. **设置环境变量**：
+1. **获取项目文件**：
    ```bash
+   # 方式A: 从GitHub克隆项目（推荐）
+   git clone https://github.com/thomas-hiddenpeak/RM01Flashing.git
+   
+   # 方式B: 或者将下载的文件夹传输到Ubuntu 22.04系统
+   ```
+
+2. **进入项目目录**：
+   ```bash
+   cd RM01Flashing
+   ```
+
+3. **设置环境变量（可选）**：
+   ```bash
+   # 脚本会自动使用默认路径，如需自定义请设置：
    export L4T_DIR=/home/rm01/nvidia/nvidia_sdk/JetPack_6.2_Linux_JETSON_AGX_ORIN_TARGETS/Linux_for_Tegra
    ```
 
-3. **给脚本执行权限**：
+4. **给脚本执行权限并运行**：
    ```bash
+   # 方式A: 在任意目录下运行（推荐）
+   chmod +x RM01Flashing/install.sh
+   ./RM01Flashing/install.sh
+   
+   # 方式B: 进入项目目录后运行
    cd RM01Flashing
    chmod +x install.sh
-   ```
-
-4. **运行安装脚本**：
-   ```bash
    ./install.sh
    ```
 
@@ -139,11 +155,12 @@ sudo ./tools/kernel_flash/l4t_initrd_flash.sh --external-device nvme0n1p1 \
 
 ## 重要注意事项
 
-1. **默认路径**: 脚本默认使用 `/home/rm01/nvidia/nvidia_sdk/JetPack_6.2_Linux_JETSON_AGX_ORIN_TARGETS/Linux_for_Tegra` 作为L4T目录
-2. **环境变量**: 如果需要使用不同路径，请手动设置 `L4T_DIR` 环境变量
-3. **权限**: 刷机操作需要 root 权限
-4. **连接**: 确保设备正确连接并处于恢复模式
-5. **备份**: 脚本会自动备份原始文件，备份目录会显示在安装过程中
+1. **脚本位置**: 脚本可以在任意目录下运行，会自动找到项目文件的正确位置
+2. **默认路径**: 脚本默认使用 `/home/rm01/nvidia/nvidia_sdk/JetPack_6.2_Linux_JETSON_AGX_ORIN_TARGETS/Linux_for_Tegra` 作为L4T目录
+3. **环境变量**: 如果需要使用不同路径，请手动设置 `L4T_DIR` 环境变量
+4. **权限**: 刷机操作需要 root 权限
+5. **连接**: 确保设备正确连接并处于恢复模式
+6. **备份**: 脚本会自动备份原始文件，备份目录会显示在安装过程中
 
 ## 配置特性
 
