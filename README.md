@@ -192,7 +192,7 @@ sudo ./tools/kernel_flash/l4t_initrd_flash.sh --external-device nvme0n1p1 \
 
 本项目中的文件基于以下许可证：
 - NVIDIA 相关文件: NVIDIA 专有许可证
-- RM01 配置文件: BSD-3-Clause
+- RM01 配置文件: MIT
 
 ---
 
